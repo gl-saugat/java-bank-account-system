@@ -15,4 +15,9 @@ public class Transaction {
         this.amount = amt;
         this.timestamp = LocalDateTime.now();
     }
+
+    @Override
+    public String toString(){
+        return transactionType + "Rs." + amount + " at " + this.timestamp;
+    }
 }

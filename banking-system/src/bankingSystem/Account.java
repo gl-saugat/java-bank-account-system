@@ -14,4 +14,16 @@ public class Account {
         this.balance = balance;
         this.transactions = new ArrayList<>();
     }
+
+    public void addBalance(BigDecimal amount){
+        this.balance = this.balance.add(amount);
+    }
+
+    public void subtractBalance(BigDecimal amount){
+        this.balance = this.balance.subtract(amount);
+    }
+
+    public void recordTransaction(String type, BigDecimal amount){
+        this.transactions.add(new Transaction(type, amount));
+    }
 }
