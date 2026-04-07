@@ -17,24 +17,19 @@ public class BankingService {
         accounts.add(userAccount);
     }
 
-    public BigDecimal getBalance() throws NullBalanceException{
-        checkBalance(currentAcc);
+    public BigDecimal getBalance(){
         return currentAcc.getBalance();
-    }
-
-    public boolean withdrawMoney(BigDecimal money) {
-        if(currentAcc.getBalance().compareTo(money) <= 0){
-            return false;
-        }
-        currentAcc.subtractBalance(money);
-        currentAcc.recordTransaction("Withdrawn", money);
-        return true;
-
     }
 
     public void depositMoney(BigDecimal money){
         currentAcc.addBalance(money);
         currentAcc.recordTransaction("Deposited", money);
+    }
+
+    public void withdrawMoney(BigDecimal money){
+        currentAcc.subtractBalance(money);
+        currentAcc.recordTransaction("Withdrawn", money);
+
     }
 
     public List<Transaction> showTransactions(){
@@ -46,11 +41,10 @@ public class BankingService {
     }
 
 
-    public void checkBalance(Account account) throws NullBalanceException{
-        boolean isThereBalance = true;
-        if(account.getBalance().equals(BigDecimal.ZERO)){
-            throw new NullBalanceException("Sorry, but you're account is empty");
+    public void checkBalance(BigDecimal money) throws InsufficientBalanceException{
+        int value = currentAcc.getBalance().compareTo(money);
+        if(value <= 0){
+            throw new InsufficientBalanceException("Sorry, you don't have sufficient balance.");
         }
-
     }
 }
