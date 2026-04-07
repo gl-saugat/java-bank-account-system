@@ -22,7 +22,7 @@ public class BankingService {
         return currentAcc.getBalance();
     }
 
-    public boolean withdrawMoney(BigDecimal money){
+    public boolean withdrawMoney(BigDecimal money) {
         if(currentAcc.getBalance().compareTo(money) <= 0){
             return false;
         }
@@ -39,6 +39,10 @@ public class BankingService {
 
     public List<Transaction> showTransactions(){
         return currentAcc.getTransactions().stream().toList();
+    }
+
+    public String myDetails(){
+        return currentAcc.toString();
     }
 
 

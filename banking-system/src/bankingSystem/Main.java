@@ -38,6 +38,8 @@ public class Main {
 
         service.showTransactions().forEach(System.out::println);
 
+        System.out.println(service.myDetails());
+
 
 
     }

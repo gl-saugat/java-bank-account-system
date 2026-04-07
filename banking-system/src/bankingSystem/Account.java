@@ -9,7 +9,7 @@ public class Account {
     IdIncrementor idInc = new IdIncrementor();
     private int accountNumber;
     private BigDecimal balance;
-    private List<Transaction> transactions;
+    private ArrayList<Transaction> transactions;
 
     public Account(BigDecimal balance){
         accountNumber = IdIncrementor.getId();
@@ -35,5 +35,17 @@ public class Account {
 
     public void recordTransaction(String type, BigDecimal amount){
         this.transactions.add(new Transaction(type, amount));
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder trans = new StringBuilder();
+        for(Transaction transaction : this.transactions){
+            trans.append(transaction).append("\n");
+        }
+
+        //this.transactions.forEach(trans::append);
+        return "ID: "+ accountNumber + " Current Balance: " + balance + " \nTransaction Records: \n" + trans;
+
     }
 }
