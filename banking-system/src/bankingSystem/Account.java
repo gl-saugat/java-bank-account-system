@@ -3,14 +3,16 @@ package bankingSystem;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Account {
-    private long accountNumber;
+    IdIncrementor idInc = new IdIncrementor();
+    private int accountNumber;
     private BigDecimal balance;
     private List<Transaction> transactions;
 
-    public Account(long accNumber, BigDecimal balance){
-        this.accountNumber = accNumber;
+    public Account(BigDecimal balance){
+        accountNumber = IdIncrementor.getId();
         this.balance = balance;
         this.transactions = new ArrayList<>();
     }
