@@ -18,6 +18,6 @@ public class Transaction {
 
     @Override
     public String toString(){
-        return transactionType + "Rs." + amount + " at " + this.timestamp;
+        return transactionType + " Rs." + amount + " at " + this.timestamp;
     }
 }

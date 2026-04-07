@@ -25,6 +25,14 @@ public class Account {
         this.balance = this.balance.subtract(amount);
     }
 
+    public BigDecimal getBalance(){
+        return this.balance;
+    }
+
+    public List<Transaction> getTransactions(){
+        return this.transactions;
+    }
+
     public void recordTransaction(String type, BigDecimal amount){
         this.transactions.add(new Transaction(type, amount));
     }
