@@ -7,11 +7,13 @@ import java.util.UUID;
 
 public class Account {
     IdIncrementor idInc = new IdIncrementor();
+    private String name;
     private int accountNumber;
     private BigDecimal balance;
     private ArrayList<Transaction> transactions;
 
-    public Account(BigDecimal balance){
+    public Account(String name,BigDecimal balance){
+        this.name = name;
         accountNumber = IdIncrementor.getId();
         this.balance = balance;
         this.transactions = new ArrayList<>();
@@ -23,6 +25,14 @@ public class Account {
 
     public void subtractBalance(BigDecimal amount){
         this.balance = this.balance.subtract(amount);
+    }
+
+    public int getAccountNumber(){
+        return this.accountNumber;
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public BigDecimal getBalance(){
@@ -45,7 +55,7 @@ public class Account {
         }
 
         //this.transactions.forEach(trans::append);
-        return "ID: "+ accountNumber + " Current Balance: " + balance + " \nTransaction Records: \n" + trans;
+        return "ID: "+ accountNumber + " Name: "+ name + " Current Balance: " + balance + " \nTransaction Records: \n" + trans;
 
     }
 }

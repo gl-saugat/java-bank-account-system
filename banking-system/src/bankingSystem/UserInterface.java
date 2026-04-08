@@ -12,15 +12,37 @@ public class UserInterface {
     }
 
     public void start(){
+        bankingMenu();
+    }
+
+    public void mainMenu(){
+        while (true){
+            System.out.println("Enter your id to login:");
+            int input = Integer.parseInt(scan.nextLine());
+            if(service.checkUser(input)){
+                bankingMenu();
+                break;
+            }
+            System.out.println("Do you want to enroll? Y/N");
+            String answer = scan.nextLine();
+            if(answer.equals("Y")){
+
+            }
+        }
+    }
+
+    public void bankingMenu(){
         while(true){
             printMenu();
             int input = getMenuOption();
 
             switch (input){
                 case 1:
+                    System.out.println("Enter you name please:");
+                    String name = scan.nextLine();
                     System.out.println("Enter the balance you want to open account with: ");
                     BigDecimal amount = getMoneyAmount();
-                    service.createAccount(amount);
+                    service.createAccount(name, amount);
                     break;
 
                 case 2:

@@ -8,13 +8,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BankingService {
-    ArrayList<Account> accounts = new ArrayList<>();
+    HashMap<Integer, Account> users;
     Account currentAcc;
 
-    public void createAccount(BigDecimal balance){
-        Account userAccount = new Account(balance);
-        currentAcc = userAccount;
-        accounts.add(userAccount);
+    public void createAccount(String name, BigDecimal balance){
+        Account userAccount = new Account(name, balance);
+        this.users.put(userAccount.getAccountNumber(), userAccount);
     }
 
     public BigDecimal getBalance(){
@@ -47,4 +46,16 @@ public class BankingService {
             throw new InsufficientBalanceException("Sorry, you don't have sufficient balance.");
         }
     }
+
+    public boolean checkUser(int id){
+        return this.users.keySet().stream().anyMatch(i -> i == id);
+    }
+
+    public void assignCurrentUser(Account account){
+        this.currentAcc = account;
+    }
+
+
+
+
 }
