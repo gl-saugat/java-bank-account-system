@@ -8,12 +8,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BankingService {
-    HashMap<Integer, Account> users;
+    HashMap<Integer, Account> users = new HashMap<>();
     Account currentAcc;
 
-    public void createAccount(String name, BigDecimal balance){
+    public Account createAccount(String name, BigDecimal balance){
         Account userAccount = new Account(name, balance);
         this.users.put(userAccount.getAccountNumber(), userAccount);
+        return userAccount;
     }
 
     public BigDecimal getBalance(){

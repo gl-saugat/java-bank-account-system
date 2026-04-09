@@ -12,22 +12,30 @@ public class UserInterface {
     }
 
     public void start(){
-        bankingMenu();
+        mainMenu();
     }
 
     public void mainMenu(){
         while (true){
             System.out.println("Enter your id to login:");
             int input = Integer.parseInt(scan.nextLine());
-            if(service.checkUser(input)){
-                bankingMenu();
-                break;
-            }
-            System.out.println("Do you want to enroll? Y/N");
-            String answer = scan.nextLine();
-            if(answer.equals("Y")){
+            if(!(service.checkUser(input))){
+                System.out.println("Do you want to enroll? Y/N");
+                String answer = scan.nextLine();
+                if(answer.equals("Y")){
+                    Account newAccount = addingUser();
+                    System.out.println("Your account has been created. Your ID is: " + newAccount.getAccountNumber());
+                    service.assignCurrentUser(newAccount);
+                    continue;
+                }
 
             }
+            if(input == 0){
+                return;
+            }
+            service.assignCurrentUser(service.users.get(input));
+            bankingMenu();
+
         }
     }
 
@@ -38,11 +46,8 @@ public class UserInterface {
 
             switch (input){
                 case 1:
-                    System.out.println("Enter you name please:");
-                    String name = scan.nextLine();
-                    System.out.println("Enter the balance you want to open account with: ");
-                    BigDecimal amount = getMoneyAmount();
-                    service.createAccount(name, amount);
+                    addingUser();
+                    System.out.println("Your account has been created.");
                     break;
 
                 case 2:
@@ -120,5 +125,13 @@ public class UserInterface {
                 System.out.println("Invalid amount!!");
             }
         }
+    }
+
+    public Account addingUser(){
+        System.out.println("Enter you name please:");
+        String name = scan.nextLine();
+        System.out.println("Enter the balance you want to open account with: ");
+        BigDecimal amount = getMoneyAmount();
+        return service.createAccount(name, amount);
     }
 }
