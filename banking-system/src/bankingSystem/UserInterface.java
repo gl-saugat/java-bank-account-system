@@ -19,8 +19,11 @@ public class UserInterface {
         while (true){
             System.out.println("Enter your id to login:");
             int input = Integer.parseInt(scan.nextLine());
+            if(input == 0){
+                return;
+            }
             if(!(service.checkUser(input))){
-                System.out.println("Do you want to enroll? Y/N");
+                System.out.println("User not found. Do you want to enroll? Y/N");
                 String answer = scan.nextLine();
                 if(answer.equals("Y")){
                     Account newAccount = addingUser();
@@ -28,11 +31,10 @@ public class UserInterface {
                     service.assignCurrentUser(newAccount);
                     continue;
                 }
+                continue;
 
             }
-            if(input == 0){
-                return;
-            }
+
             service.assignCurrentUser(service.users.get(input));
             bankingMenu();
 
@@ -46,8 +48,8 @@ public class UserInterface {
 
             switch (input){
                 case 1:
-                    addingUser();
-                    System.out.println("Your account has been created.");
+                    Account newAccount = addingUser();
+                    System.out.println("Your account has been created. Your ID is: " + newAccount.getAccountNumber());
                     break;
 
                 case 2:
