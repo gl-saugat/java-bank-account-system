@@ -10,6 +10,7 @@ public class UserInterface {
     public UserInterface(Scanner scanner){
         this.scan = scanner;
     }
+    private Account currentUser;
 
     public void start(){
         mainMenu();
@@ -28,14 +29,14 @@ public class UserInterface {
                 if(answer.equals("Y")){
                     Account newAccount = addingUser();
                     System.out.println("Your account has been created. Your ID is: " + newAccount.getAccountNumber());
-                    service.assignCurrentUser(newAccount);
+                    currentUser = newAccount;
                     continue;
                 }
                 continue;
 
             }
 
-            service.assignCurrentUser(service.users.get(input));
+            currentUser = (service.getUsers().get(input));
             bankingMenu();
 
         }
@@ -55,7 +56,11 @@ public class UserInterface {
                 case 2:
                     System.out.println("Enter the amount you want to deposit : ");
                     BigDecimal addAmount = getMoneyAmount();
-                    service.depositMoney(addAmount);
+                    try{
+                        service.depositMoney(currentUser, addAmount);
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("You're " + addAmount + "has been deposited.");
                     break;
 
@@ -63,8 +68,12 @@ public class UserInterface {
                     try {
                         System.out.println("Enter the amount you want to withdraw : ");
                         BigDecimal takeAmount = getMoneyAmount();
-                        service.checkBalance(takeAmount);
-                        service.withdrawMoney(takeAmount);
+                        service.checkBalance(currentUser, takeAmount);
+                        try{
+                            service.withdrawMoney(currentUser, takeAmount);
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                        }
                         System.out.println("You're " + takeAmount + "has been withdrawn.");
                     } catch (InsufficientBalanceException e) {
                         System.out.println(e.getMessage());
@@ -72,11 +81,11 @@ public class UserInterface {
                     break;
 
                 case 4:
-                    System.out.println("Your current balance is: " + service.getBalance());
+                    System.out.println("Your current balance is: " + service.getBalance(currentUser));
                     break;
 
                 case 5:
-                    List<Transaction> trans= service.showTransactions();
+                    List<Transaction> trans= service.showTransactions(currentUser);
                     if(trans.isEmpty()){
                         System.out.println("No transactions performed yet.");
                         break;
