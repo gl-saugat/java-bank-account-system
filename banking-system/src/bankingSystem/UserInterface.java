@@ -127,7 +127,7 @@ public class UserInterface {
     public BigDecimal getMoneyAmount(){
         while(true){
             try{
-                BigDecimal input = BigDecimal.valueOf(Long.parseLong(scan.nextLine()));
+                BigDecimal input = new BigDecimal(scan.nextLine());
                 if(input.floatValue()> 0){
                     return input;
                 }
